@@ -2,6 +2,7 @@
 # This file created by Chef from template. Do not hand edit this file
 
 advertised.host.name=<%= node[:ec2][:public_hostname] %>
+log.dir=/mnt/
 
 <% @properties.each do |key, value| %>
 <%= key %>=<%= value %>
