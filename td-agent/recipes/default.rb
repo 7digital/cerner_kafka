@@ -142,18 +142,17 @@ bash "create_logging" do
   code <<-EOH
     echo "
     <source>
-  type tail
+  @type tail
   path /var/log/kafka/*.log
   pos_file /var/log/fluentd-docker.pos
-  time_format %Y-%m-%dT%H:%M:%S
-  tag docker
-  format json
+  tag s3
+  format none
 </source>
 
-<match docker>
-  type ec2_metadata
 
-  output_tag docker.\${instance_id}.\${tag}
+<match s3>
+  type ec2_metadata
+  output_tag s3.\${instance_id}.\${tag}
   <record>
     instance_id   \${instance_id}
     instance_type \${instance_type}
@@ -161,21 +160,15 @@ bash "create_logging" do
   </record>
 </match>
 
-<match docker.var.lib.docker.containers.*.*.log>
-  type record_reformer
-  container_id \${tag_parts[5]}
-  tag docker.all
-</match>
-
-<match docker**>
+<match s3**>
   @type s3
 
   s3_bucket 7digital-kafka-prod
   s3_region eu-central-1
   path logs/
-  buffer_path /var/log/fluent/s3
+  buffer_path /tmp/
 
-  time_slice_format %Y%m%d%H
+  time_slice_format %Y%m%d%H%M
   time_slice_wait 10m
   utc
 
