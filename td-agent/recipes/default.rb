@@ -137,14 +137,6 @@ node["td_agent"]["plugins"].each do |plugin|
   end
 end
 
-bash "configure_td-agent" do
-  user "root"
-  code <<-EOH
-    echo "" >> /etc/td-agent/td-agent.conf
-    echo "include conf.d/*.conf" >> /etc/td-agent/td-agent.conf
-    EOH
-end
-
 bash "create_logging" do
   user "root"
   code <<-EOH
