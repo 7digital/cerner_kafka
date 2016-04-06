@@ -30,7 +30,7 @@ remote_file 'download loggly.com cert' do
   mode 0644
   path loggly_crt_path
   source node['loggly']['tls']['cert_url']
-  checksum node['loggly']['tls']['cert_checksum']
+
 end
 
 remote_file 'download intermediate cert' do
@@ -39,7 +39,7 @@ remote_file 'download intermediate cert' do
   mode 0644
   path sf_bundle_path
   source node['loggly']['tls']['intermediate_cert_url']
-  checksum node['loggly']['tls']['intermediate_cert_checksum']
+  
 end
 
 bash 'bundle certificate' do
