@@ -163,8 +163,8 @@ bash "create_logging" do
 <match s3**>
   @type s3
 
-  s3_bucket 7digital-kafka-prod
-  s3_region eu-central-1
+  s3_bucket " + node["td_agent"]["s3_bucket"] + "
+  s3_region  " + node["td_agent"]["region"] + "
   path logs/
   buffer_path /tmp/
 
