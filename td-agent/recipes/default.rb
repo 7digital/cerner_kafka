@@ -163,8 +163,8 @@ bash "create_logging" do
 <match s3**>
   @type s3
 
-  s3_bucket " + node["td_agent"]["s3_bucket"] + "
-  s3_region  " + node["td_agent"]["region"] + "
+  s3_bucket #{node["td_agent"]["s3_bucket"]}
+  s3_region  #{node["td_agent"]["region"]}
   path logs/
   buffer_path /tmp/
 
