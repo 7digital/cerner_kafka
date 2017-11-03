@@ -92,11 +92,11 @@ module EphemeralDevices
     #
     def self.fix_device_mapping(devices, node_block_devices)
       devices.map! do |device|
-        if node_block_devices.include?(device.match(/\/dev\/([a-z]+)$/)[0])
+        if node_block_devices.include?(device.match(/\/dev\/([a-z]+)$/)[1])
           device
         else
           fixed_device = device.sub("/sd", "/xvd")
-          if node_block_devices.include?(fixed_device.match(/\/dev\/([a-z]+)$/)[0])
+          if node_block_devices.include?(fixed_device.match(/\/dev\/([a-z]+)$/)[1])
             fixed_device
           else
             Chef::Log.warn "could not find ephemeral device: #{device}"
